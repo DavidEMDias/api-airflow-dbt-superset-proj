@@ -99,10 +99,10 @@ def insert_records(conn, data):
 def main():
     try:
         #data = mock_fetch_data()
-        data = fetch_data()
+        data = fetch_data("London")
         conn = connect_to_db()
         create_table(conn)
-        insert_records(conn,data)
+        insert_records(conn, data)
     except Exception as e:
         print(f"An error occurred during execution: {e}")
     finally: #Regardless of wether it successed or not. Always executes.

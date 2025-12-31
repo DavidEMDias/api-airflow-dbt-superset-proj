@@ -24,3 +24,8 @@ __pycache__/
 
 # Postgres data
 postgres/data/
+
+*.png
+*.txt
+
+support/

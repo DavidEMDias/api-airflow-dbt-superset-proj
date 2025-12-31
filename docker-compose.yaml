@@ -30,10 +30,14 @@ services:
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@db:5432/airflow_db
       API_KEY: ${API_KEY}  #Docker gets it from .env file
+      AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: 30
+      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 30
+      AIRFLOW__SCHEDULER__SCHEDULER_HEARTBEAT_SEC: 5
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./api-request:/opt/airflow/api-request
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./dbt:/opt/dbt
     group_add:
       - '1001'
     depends_on:
