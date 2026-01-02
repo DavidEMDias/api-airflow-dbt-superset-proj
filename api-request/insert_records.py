@@ -82,6 +82,7 @@ def insert_records(conn, data):
                 inserted_at,
                 utc_offset
             ) VALUES (%s, %s, %s, %s, %s, NOW(), %s)
+            ON CONFLICT (city, time) DO NOTHING;
         """,(
             location['name'],
             weather['temperature'],
@@ -90,16 +91,29 @@ def insert_records(conn, data):
             location['localtime'],
             location['utc_offset']
         ))
+
+        if cursor.rowcount == 0:
+            print(
+                f"[IDEMPOTENT] Record already exists for "
+                f"city='{location['name']}', time='{location['localtime']}'. Skipping insert."
+            )
+        else:
+            print(
+                f"[INSERTED] Weather data inserted for "
+                f"city='{location['name']}', time='{location['localtime']}'."
+            )
+
         conn.commit()
-        print("Data successfully inserted.")
+        #print("Data successfully inserted.")
     except psycopg2.Error as e:
+        conn.rollback()
         print(f"Error inserting data into the database: {e}")
         raise
 
 def main():
     try:
         #data = mock_fetch_data()
-        data = fetch_data("London")
+        data = fetch_data()
         conn = connect_to_db()
         create_table(conn)
         insert_records(conn, data)
