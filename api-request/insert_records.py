@@ -29,13 +29,13 @@ def check_if_table_exists(cursor):
 
 
 def create_table(conn):
-    print("Checking if table exists...")
+    print("Ensuring table exists...")
 
     try:
         cursor = conn.cursor()
 
         if check_if_table_exists(cursor):
-            print("Table already exists.")
+            print("Table already exists. Skipping creation.")
             return
 
         print("Creating table...")
@@ -49,7 +49,8 @@ def create_table(conn):
                 wind_speed FLOAT,
                 time TIMESTAMP,
                 inserted_at TIMESTAMP DEFAULT NOW(),
-                utc_offset TEXT
+                utc_offset TEXT,
+                CONSTRAINT unique_city_time UNIQUE (city, time)
             );
         """)
 

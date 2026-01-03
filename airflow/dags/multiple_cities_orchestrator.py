@@ -8,7 +8,7 @@ import time
 
 sys.path.append('/opt/airflow/api-request')
 
-from insert_records import connect_to_db, insert_records
+from insert_records import connect_to_db, insert_records, create_table
 from api_request import fetch_data
 
 #Cities to fetch weather data for
@@ -18,6 +18,7 @@ cities = ["Paris", "London", "Lisbon"]
 def fetch_and_insert(city):
     conn = connect_to_db()
     try:
+        create_table(conn)
         data = fetch_data(city)
         insert_records(conn, data)
         print(f"Data for {city} inserted successfully.")
