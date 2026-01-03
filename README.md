@@ -1,7 +1,7 @@
 # 🌦️ Weather Data Engineering Pipeline
 
-Role: Data Engineer
-Tools Used: Airflow, Docker, PostgreSQL, SQL-based transformation (dbt), Python scripts and DAGs, Apache Superset.
+**Role:** Data Engineer. <br>
+**Tools Used:** Airflow, Docker, PostgreSQL, SQL-based transformation (dbt), Python scripts and DAGs, Apache Superset.
 
 An end-to-end **ELT (Extract, Load, Transform)** data pipeline that ingests live weather data, loads it into PostgreSQL, transforms and enriches it using dbt, and produces analytical visualizations — fully automated and containerized.
 
