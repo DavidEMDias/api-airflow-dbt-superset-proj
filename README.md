@@ -39,7 +39,7 @@ This project implements a modern **ELT (Extract, Load, Transform)** architecture
 
 ### Architecture Overview
 
-In construction
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/35bd92d4-1223-4738-89ce-fae9a98000af" />
 
 ### Pipeline Components
 
@@ -50,6 +50,7 @@ In construction
 2. **Load**
    - Raw weather data is first loaded into a PostgreSQL database.
    - This preserves source data for auditing, backfills, and reprocessing.
+   - **Idempotency is guaranteed** via a unique constraint on `(city, time)` and `INSERT ... ON CONFLICT DO NOTHING`, ensuring reruns do not create duplicate entries.
 
 3. **Transform (dbt)**
    - dbt is used to transform raw data directly inside PostgreSQL.
@@ -80,7 +81,22 @@ In construction
 - ✅ Scalable, SQL-based transformations powered by dbt  
 - ✅ Orchestrated and monitored using Apache Airflow  
 - ✅ Analytics-ready datasets and meaningful visualizations using Apache Superset  
-- ✅ Reproducible and portable deployment using Docker  
+- ✅ Reproducible and portable deployment using Docker
+
+<br>
+### Figures
+
+#### Figure 1: Main Workflow Orchestration
+![Main Workflow Orchestration](https://github.com/user-attachments/assets/643e1cd8-7790-478e-88a6-853a5d230f96)
+
+#### Figure 2: Airflow DAG in Execution
+![Airflow DAG in Execution](https://github.com/user-attachments/assets/59a55830-1580-4a58-b29f-a851d3ef182d)
+
+#### Figure 3: Airflow DAG Idempotency in Execution
+![Airflow DAG Idempotency](https://github.com/user-attachments/assets/e2b77edb-8968-4bed-8c65-63f03a7f50c2)
+
+#### Figure 4: Superset Visualizations
+![Superset Visualizations](https://github.com/user-attachments/assets/cc23aecb-413c-4bdb-8263-d94a0aa50db7)
 
 ---
 
